@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Trailers</title>
+</head>
+<body>
+    <h1>Movie Trailers</h1>
+    <div id="movies-list"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const apiKey = "90a9161bc2d65b4a8fd8e13a8b91aceb";
+            const apiUrl = "https://api.themoviedb.org/3/movie/"; // Append movie_id for specific movie
+            const trailerUrl = "https://www.youtube.com/embed/";
+
+            async function fetchMovieDetails(movieId) {
+                const response = await fetch(`${apiUrl}${movieId}?api_key=${apiKey}&append_to_response=videos`);
+                const data = await response.json();
+                return data;
+            }
+
+            function embedTrailer(videoKey, containerId) {
+                const iframe = document.createElement("iframe");
+                iframe.src = `${trailerUrl}${videoKey}`;
+                iframe.width = "560";
+                iframe.height = "315";
+                document.getElementById(containerId).appendChild(iframe);
+            }
+
+            // Example: Fetch details for a specific movie (replace with your movie IDs)
+            const movieId = 550; // Example movie ID (Inception)
+            fetchMovieDetails(movieId)
+                .then(data => {
+                    const videos = data.videos.results.filter(video => video.site.toLowerCase() === "youtube");
+                    if (videos.length > 0) {
+                        embedTrailer(videos[0].key, "movies-list");
+                    } else {
+                        console.log("No trailers available for this movie.");
+                    }
+                })
+                .catch(error => console.error("Error fetching movie details:", error));
+        });
+    </script>
+</body>
+</html>
