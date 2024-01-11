@@ -1,27 +1,28 @@
 <?php
-$db_host = "your_database_host";
-$db_user = "your_database_username";
-$db_password = "your_database_password";
-$db_name = "mydatabase";
+// Database connection
+$host = "ep-billowing-glade-17644033-pooler.us-east-1.postgres.vercel-storage.com";
+$database = "verceldb";
+$user = "default";
+$password = "sOtjrv7Zg4Rc";
 
-$conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+$conn = new PDO("pgsql:host=$host;dbname=$database;user=$user;password=$password");
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+// Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
-    $password = $_POST["password"];
+    $email = $_POST["email"];
+    $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
 
-    $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+    // Insert user data into the database
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $password);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         echo "Registration successful!";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $stmt->errorInfo()[2];
     }
 }
-
-$conn->close();
 ?>
