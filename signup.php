@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
 
     // Connect to your PostgreSQL database
-    $db = new PDO("pgsql:host=ep-billowing-glade-17644033-pooler.us-east-1.postgres.vercel-storage.com;dbname=verceldb", "your_username", "sOtjrv7Zg4Rc");
+    $db = new PDO("pgsql:host=ep-billowing-glade-17644033-pooler.us-east-1.postgres.vercel-storage.com;dbname=verceldb", "Kingstech", "sOtjrv7Zg4Rc");
 
     // Insert user data into the 'users' table
     $stmt = $db->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
