@@ -11,8 +11,7 @@ background-image: url("https://images.pexels.com/photos/2775196/pexels-photo-277
 
 #auth-container {
     text-align: center;
-filter: blur(8px);
-  -webkit-filter: blur(8px);
+background: blur(8px);
 }
 
 input {
