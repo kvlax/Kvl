@@ -6,12 +6,12 @@ body {
     height: 100vh;
     margin: 0;
     background-size: cover;
-background-image: url("https://images.pexels.com/photos/2775196/pexels-photo-2775196.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+background-image: url("img/pngtree-dark-green-cyan-paper-cut-minimalist-background-for-brochure-poster-banner-image_405384.jpg")
 }
 
 #auth-container {
     text-align: center;
-opacity: 10px;
+opacity: 0px;
 }
 
 input {
